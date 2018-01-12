@@ -1,10 +1,15 @@
 #!/bin/bash
-cd
-wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
-sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
+cd /usr/src
+wget https://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip
+tar xzf apache-maven-3.3.9*
+mv apache-maven-3.3.9 /opt/maven
+ln -s /opt/maven/bin/mvn /usr/bin/mvn
+
 curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
 yum install -y nodejs --enablerepo=nodesource
-yum install -y git tmux maven java-1.8.0-openjdk java-1.8.0-openjdk-devel gcc gcc-c++
+yum install -y git tmux java-1.8.0-openjdk java-1.8.0-openjdk-devel gcc gcc-c++ tar docker
+yum remove -y java-1.7.0
 npm install -g node-gyp
-update-alternatives --config java
-update-alternatives --config javac
+
+yum clean all
+service docker start

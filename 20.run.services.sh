@@ -1,7 +1,7 @@
 #!/bin/bash
 
 conf_dir="./configs"
-services="hdfs zookeeper kafka elasticsearch metron"
+services="hdfs zookeeper kafka elasticsearch metron storm"
 for i in $services; do
 	adduser $i
 	echo -e "$i\thard\tnofile\t32768" >> /etc/security/limits.d/$i
