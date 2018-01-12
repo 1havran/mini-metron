@@ -1,5 +1,4 @@
-adduser hdfs
-su - hdfs
+rm -rf ~/had*
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 chmod 0600 ~/.ssh/authorized_keys
@@ -45,4 +44,4 @@ cat << EOF > etc/hadoop/yarn-site.xml
 EOF
 bin/hdfs namenode -format
 sbin/start-dfs.sh
-bin/start-yarn.sh
+sbin/start-yarn.sh
