@@ -7,9 +7,10 @@ ln -s /opt/maven/bin/mvn /usr/bin/mvn
 
 curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
 yum install -y nodejs --enablerepo=nodesource
-yum install -y git tmux java-1.8.0-openjdk java-1.8.0-openjdk-devel gcc gcc-c++ tar docker
+yum install -y git tmux java-1.8.0-openjdk java-1.8.0-openjdk-devel gcc gcc-c++ tar docker squid
 yum remove -y java-1.7.0
 npm install -g node-gyp
 
 yum clean all
 service docker start
+service squid start
