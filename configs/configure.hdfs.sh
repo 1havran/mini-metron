@@ -6,6 +6,7 @@ chmod 0600 ~/.ssh/authorized_keys
 wget http://tux.rainside.sk/apache/hadoop/common/hadoop-3.0.0/hadoop-3.0.0.tar.gz
 tar xzf hadoop*
 cd hadoop*
+echo export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk >> etc/hadoop/hadoop-env.sh
 
 cat <<EOF > etc/hadoop/core-site.xml
 <configuration>
