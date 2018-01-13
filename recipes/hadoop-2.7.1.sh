@@ -26,6 +26,14 @@ cat <<EOF > etc/hadoop/hdfs-site.xml
         <name>dfs.replication</name>
         <value>1</value>
     </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:///home/hadoop/hadoop/dfs/namenode</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:///home/hadoop/hadoop/dfs/datanode</value>
+    </property>
 </configuration>
 EOF
 

@@ -1,4 +1,9 @@
 #!/bin/bash
+
+export METRON_HOME="/usr/metron/0.4.3"
+export HBASE_HOME="/home/hbase/hbase"
+export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk"
+
 echo cleaning
 rm -rf /tmp/kafka*
 rm -rf /tmp/zookeepe*
@@ -25,10 +30,6 @@ su - storm -c "/home/storm/apache-storm/bin/storm ui 2>/dev/null &"
 echo 'Sleeping 30 seconds before Metron...'
 sleep 30
 
-export METRON_HOME="/usr/metron/0.4.3"
-export HBASE_HOME="/home/hbase/hbase"
-export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk"
-
 echo metron
 echo metron zk
 $METRON_HOME/bin/zk_load_configs.sh -m PUSH -i $METRON_HOME/config/zookeeper -z node1:2181
@@ -40,5 +41,8 @@ echo elasticsearch
 $METRON_HOME/bin/start_elasticsearch_topology.sh
 echo profiler
 $METRON_HOME/bin/start_profiler_topology.sh
+echo storm list
 storm list
+echo
+echo elasticsearch indices
 curl 'localhost:9200/_cat/indices?v'
