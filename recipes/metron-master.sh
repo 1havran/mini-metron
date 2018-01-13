@@ -5,13 +5,11 @@ cd metron
 mvn clean package -DskipTests -Pbuild-rpms
 
 echo '127.0.0.1 node1' >> /etc/hosts
-echo 'listeners=PLAINTEXT://:6667' >> /home/kafka/kaf*/config/server.properties
+echo 'listeners=PLAINTEXT://:6667' >> /home/kafka/kafka/config/server.properties
 
-ln -s /home/storm/storm*/bin/storm /usr/bin/storm
-ln -s /home/zookeeper/zk*/bin/zkCli.sh /usr/bin/zookeeper-client
-
-export METRON_HOME="/usr/metron/4.3.0"
-export HBASE_HOME="/home/hbase/hb*"
+ln -s /home/storm/storm/bin/storm /usr/bin/storm
+ln -s /home/zookeeper/zookeeper/bin/zkCli.sh /usr/bin/zookeeper-client
+ln -sf /home/hadoop/hadoop/libexec/hadoop-config.sh /usr/libexec/
 
 exit
 

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 rm -rf ~/had*
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
@@ -5,7 +7,7 @@ chmod 0600 ~/.ssh/authorized_keys
 
 wget http://tux.rainside.sk/apache/hadoop/common/hadoop-3.0.0/hadoop-3.0.0.tar.gz
 tar xzf hadoop*
-ln -sf hadoop-* hadoop
+ln -sf hadoop-3.0.0 hadoop
 cd hadoop*
 echo export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk >> etc/hadoop/hadoop-env.sh
 
