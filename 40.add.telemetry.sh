@@ -1,8 +1,58 @@
 #!/bin/bash
 
 ZK="node1:2181"
+ES="node1:9200"
 KAFKA="node1:6667"
 METRON_VERSION="0.4.3"
+
+curl -XPOST $ES/_template/squid_index -d '
+ {
+ "template": "squid_index*",
+ "mappings": {
+ "squid_doc": {
+ "properties": {
+ "timestamp": {
+ "type": "date",
+ "format": "epoch_millis"
+ },
+ "source:type": {
+ "type": "string",
+ "index": "not_analyzed"
+ },
+ "action": {
+ "type": "string",
+ "index": "not_analyzed"
+ },
+ "bytes": {
+ "type": "integer"
+ },
+ "code": {
+ "type": "string",
+ "index": "not_analyzed"
+ },
+ "domain_without_subdomains": {
+ "type": "string",
+ "index": "not_analyzed"
+ },
+ "full_hostname": {
+ "type": "string",
+ "index": "not_analyzed"
+ },
+ "elapsed": {
+ "type": "integer"
+ },
+ "method": {
+ "type": "string",
+ "index": "not_analyzed"
+ },
+ "ip_dst_addr": {
+ "type": "string",
+ "index": "not_analyzed"
+ }
+ }
+ }
+ }
+ }'
 
 #check topic for source
 /home/kafka/kafka/bin/kafka-topics.sh --list --zookeeper $ZK

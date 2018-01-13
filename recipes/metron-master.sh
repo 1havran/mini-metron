@@ -14,4 +14,10 @@ ln -s /home/storm/storm/bin/storm /usr/bin/storm
 ln -s /home/zookeeper/zookeeper/bin/zkCli.sh /usr/bin/zookeeper-client
 ln -sf /home/hadoop/hadoop/libexec/hadoop-config.sh /usr/libexec/
 
-exit
+
+cd /root/metron/metron-deployment/packaging/ambari/metron-mpack/target/classes/common-services/METRON/CURRENT/package/files
+for i in *template; do
+	ii=`echo $i | cut -d_ -f1`
+	index=$ii"_index"
+	curl -XPUT "http://node1:9200/_template/$index" -d @$i
+done
