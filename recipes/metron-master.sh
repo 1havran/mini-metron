@@ -13,6 +13,11 @@ sed -i "s/topology.auto-credentials=['']/topology.auto-credentials=/g" /usr/metr
 echo 'cluster.name: metron' >> /home/elasticsearch/elasticsearch/config/elasticsearch.yml
 echo http.cors.enabled: true >> /home/elasticsearch/elasticsearch/config/elasticsearch.yml
 echo http.cors.allow-origin: /.* >> /home/elasticsearch/elasticsearch/config/elasticsearch.yml
+echo "supervisor.slots.ports: [6700, 6701, 6702, 6703, 6704, 6705]" >> /home/storm/storm/conf/storm.yaml
+cd /tmp
+wget http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+su - hadoop -c "hadoop/bin/hadoop dfs -mkdir -p /apps/metron/geo/default/"
+su - hadoop -c "hadoop/bin/hadoop dfs -put /tmp/GeoLite2-City.mmdb.gz /apps/metron/geo/default/"
 
 ln -s /home/storm/storm/bin/storm /usr/bin/storm
 ln -s /home/zookeeper/zookeeper/bin/zkCli.sh /usr/bin/zookeeper-client
