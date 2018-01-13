@@ -14,6 +14,7 @@ echo yarn
 su - hdfs -c "hadoop/sbin/start-yarn.sh"
 echo elasticsearch
 su - elasticsearch -c "elasticsearch/bin/elasticsearch -d &"
+su - elasticsearch -c "cd plugin/elasticsearch-head && npm run start &"
 echo storm nimbus
 su - storm -c "/home/storm/apache-storm/bin/storm nimbus 2>/dev/null &"
 echo storm supervisor

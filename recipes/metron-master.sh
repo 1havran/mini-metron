@@ -11,6 +11,8 @@ echo '127.0.0.1 node1' >> /etc/hosts
 echo 'listeners=PLAINTEXT://:6667' >> /home/kafka/kafka/config/server.properties
 sed -i "s/topology.auto-credentials=['']/topology.auto-credentials=/g" /usr/metron/*/config/elasticsearch.properties
 echo 'cluster.name: metron' >> /home/elasticsearch/elasticsearch/config/elasticsearch.yml
+echo http.cors.enabled: true >> /home/elasticsearch/elasticsearch/config/elasticsearch.yml
+echo http.cors.allow-origin: /.* >> /home/elasticsearch/elasticsearch/config/elasticsearch.yml
 
 ln -s /home/storm/storm/bin/storm /usr/bin/storm
 ln -s /home/zookeeper/zookeeper/bin/zkCli.sh /usr/bin/zookeeper-client
