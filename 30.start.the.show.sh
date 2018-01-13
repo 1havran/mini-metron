@@ -7,11 +7,11 @@ rm -rf /tmp/hadoop*pid
 echo zk
 su - zookeeper -c "zookeeper/bin/zkServer.sh start"
 echo kafka
-su - kafka -c "kafka/bin/kafka-server-start.sh -daemon kafka/config/server.properties &"
+su - kafka -c 'export KAFKA_HEAP_OPTS="-Xmx256m -Xms256m"; kafka/bin/kafka-server-start.sh -daemon kafka/config/server.properties &'
 echo hdfs dfs
-su - hdfs -c "hadoop/sbin/start-dfs.sh"
+su - hadoop -c "hadoop/sbin/start-dfs.sh"
 echo yarn
-su - hdfs -c "hadoop/sbin/start-yarn.sh"
+su - hadoop -c "hadoop/sbin/start-yarn.sh"
 echo elasticsearch
 su - elasticsearch -c "elasticsearch/bin/elasticsearch -d &"
 su - elasticsearch -c "cd plugin/elasticsearch-head && npm run start &"
