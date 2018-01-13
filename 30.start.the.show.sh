@@ -1,4 +1,9 @@
 #!/bin/bash
+echo cleaning
+rm -rf /tmp/kafka*
+rm -rf /tmp/zookeepe*
+rm -rf /tmp/hadoop*pid
+
 echo zk
 su - zookeeper -c "zookeeper/bin/zkServer.sh start"
 echo kafka
