@@ -8,6 +8,7 @@ rm -rf /tmp/hadoop*pid
 
 echo zk on :2181
 su - zookeeper -c "zookeeper/bin/zkServer.sh start"
+sleep 10
 echo kafka on :6667
 su - kafka -c 'export KAFKA_HEAP_OPTS="-Xmx256m -Xms256m"; kafka/bin/kafka-server-start.sh -daemon kafka/config/server.properties &'
 echo hdfs dfs with hdfs:// on :9000
@@ -16,7 +17,7 @@ echo yarn on :8088
 su - hadoop -c "hadoop/sbin/start-yarn.sh"
 echo elasticsearch on :9200 and head on :9100
 su - elasticsearch -c "elasticsearch/bin/elasticsearch -d &"
-su - elasticsearch -c "cd plugin/elasticsearch-head && npm run start &"
+su - elasticsearch -c "cd plugin/elasticsearch-head && npm run start 2>/dev/null &"
 echo kibana on :5601
 su - kibana -c "kibana/bin/kibana serve &"
 echo storm nimbus
