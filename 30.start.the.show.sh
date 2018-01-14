@@ -17,19 +17,19 @@ echo yarn on :8088
 su - hadoop -c "hadoop/sbin/start-yarn.sh"
 echo elasticsearch on :9200 and head on :9100
 su - elasticsearch -c "elasticsearch/bin/elasticsearch -d &"
-su - elasticsearch -c "cd plugin/elasticsearch-head && npm run start 2>/dev/null &"
+su - elasticsearch -c "cd plugin/elasticsearch-head && npm run start >/dev/null &"
 echo kibana on :5601
 su - kibana -c "kibana/bin/kibana serve &"
 echo storm nimbus
-su - storm -c "/home/storm/apache-storm/bin/storm nimbus 2>/dev/null &"
+su - storm -c "/home/storm/apache-storm/bin/storm nimbus >/dev/null &"
 echo storm supervisor
-su - storm -c "/home/storm/apache-storm/bin/storm supervisor 2>/dev/null &"
+su - storm -c "/home/storm/apache-storm/bin/storm supervisor >/dev/null &"
 echo storm ui on :8080
-su - storm -c "/home/storm/apache-storm/bin/storm ui 2>/dev/null &"
+su - storm -c "/home/storm/apache-storm/bin/storm ui >/dev/null &"
 echo hbase master
-su - hbase -c "/home/hbase/hbase/bin/hbase master start 2>/dev/null &"
+su - hbase -c "/home/hbase/hbase/bin/hbase master start >/dev/null &"
 echo hbase region
-su - hbase -c "/home/hbase/hbase/bin/hbase regionservert start 2>/dev/null &"
+su - hbase -c "/home/hbase/hbase/bin/hbase regionserver start >/dev/null &"
 
 
 echo 'Sleeping 30 seconds before Metron...'
@@ -39,13 +39,13 @@ echo metron
 echo metron zk
 $METRON_HOME/bin/zk_load_configs.sh -m PUSH -i $METRON_HOME/config/zookeeper -z $ZOOKEEPER
 echo parser
-$METRON_HOME/bin/start_parser_topology.sh -k $KAFKA -z $ZOOKEEPER -s squid
+$METRON_HOME/bin/start_parser_topology.sh -k $KAFKA -z $ZOOKEEPER -s squid >/dev/null
 echo enrichment
-$METRON_HOME/bin/start_enrichment_topology.sh
+$METRON_HOME/bin/start_enrichment_topology.sh >/dev/null
 echo elasticsearch
-$METRON_HOME/bin/start_elasticsearch_topology.sh
+$METRON_HOME/bin/start_elasticsearch_topology.sh >/dev/null
 echo profiler
-$METRON_HOME/bin/start_profiler_topology.sh
+$METRON_HOME/bin/start_profiler_topology.sh >/dev/null
 echo storm list
 storm list
 echo
@@ -59,6 +59,6 @@ $METRON_HOME/bin/metron-alerts-ui start
 echo start metron management ui on :4201
 $METRON_HOME/bin/metron-management-ui start
 echo starting maas
-$METRON_HOME/bin/maas_service.sh -zq $ZOOKEEPER
+$METRON_HOME/bin/maas_service.sh -zq $ZOOKEEPER >/dev/null
 
 
