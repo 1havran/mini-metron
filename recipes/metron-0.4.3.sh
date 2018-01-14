@@ -15,6 +15,8 @@ echo http.cors.enabled: true >> /home/elasticsearch/elasticsearch/config/elastic
 echo http.cors.allow-origin: /.* >> /home/elasticsearch/elasticsearch/config/elasticsearch.yml
 sed -i "s/-Xms2g/-Xms512m/g" /home/elasticsearch/elasticsearch/config/jvm.options
 sed -i "s/-Xmx2g/-Xmx512m/g" /home/elasticsearch/elasticsearch/config/jvm.options
+mkdir -p /apps/metron/geo/default
+cd /apps/metron/geo/default && wget http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
 echo "supervisor.slots.ports: [6700, 6701, 6702, 6703, 6704, 6705]" >> /home/storm/storm/conf/storm.yaml
 su - hadoop -c "hadoop/bin/hadoop dfs -mkdir /hbase"
 su - hadoop -c "hadoop/bin/hadoop dfs -chown hbase /hbase"

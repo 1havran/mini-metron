@@ -59,6 +59,6 @@ $METRON_HOME/bin/metron-alerts-ui start
 echo start metron management ui on :4201
 $METRON_HOME/bin/metron-management-ui start
 echo starting maas
-$METRON_HOME/bin/maas_service.sh -zq $ZOOKEEPER >/dev/null
+$METRON_HOME/bin/maas_service.sh -zq $ZOOKEEPER &
 
 
