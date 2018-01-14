@@ -1,8 +1,5 @@
 #!/bin/bash
-
-export METRON_HOME="/usr/metron/0.4.3"
-export HBASE_HOME="/home/hbase/hbase"
-export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk"
+source /etc/default/metron
 
 echo cleaning
 rm -rf /tmp/kafka*
@@ -20,12 +17,19 @@ su - hadoop -c "hadoop/sbin/start-yarn.sh"
 echo elasticsearch
 su - elasticsearch -c "elasticsearch/bin/elasticsearch -d &"
 su - elasticsearch -c "cd plugin/elasticsearch-head && npm run start &"
+echo kibana
+su - kibana -c "kibana/bin/kibana serve &"
 echo storm nimbus
 su - storm -c "/home/storm/apache-storm/bin/storm nimbus 2>/dev/null &"
 echo storm supervisor
 su - storm -c "/home/storm/apache-storm/bin/storm supervisor 2>/dev/null &"
 echo storm ui
 su - storm -c "/home/storm/apache-storm/bin/storm ui 2>/dev/null &"
+echo hbase master
+su - hbase -c "/home/hbase/hbase/bin/hbase master start &"
+echo hbase region
+su - hbase -c "/home/hbase/hbase/bin/hbase regionservert start &"
+
 
 echo 'Sleeping 30 seconds before Metron...'
 sleep 30

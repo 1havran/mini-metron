@@ -1,7 +1,7 @@
 #!/bin/bash
 
 recipes_dir="./recipes"
-services="hadoop-2.7.1 zookeeper-3.4.10 kafka-1.0.0 elasticsearch-5.6.5 storm-1.1.1"
+services="hadoop-2.7.1 zookeeper-3.4.10 kafka-1.0.0 elasticsearch-5.6.5 storm-1.1.1 kibana-6.1.1 hbase-1.2.6"
 
 for s in $services; do
 	user=`echo $s | cut -d'-' -f1`

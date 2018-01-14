@@ -34,6 +34,11 @@ cat <<EOF > etc/hadoop/hdfs-site.xml
         <name>dfs.datanode.data.dir</name>
         <value>file:///home/hadoop/hadoop/dfs/datanode</value>
     </property>
+    <property>
+        <name>dfs.webhdfs.enabled</name>
+        <value>true</value>
+    </property>
+ 
 </configuration>
 EOF
 
