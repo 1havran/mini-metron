@@ -18,6 +18,8 @@ sed -i "s/-Xmx2g/-Xmx512m/g" /home/elasticsearch/elasticsearch/config/jvm.option
 echo "supervisor.slots.ports: [6700, 6701, 6702, 6703, 6704, 6705]" >> /home/storm/storm/conf/storm.yaml
 su - hadoop -c "hadoop/bin/hadoop dfs -mkdir /hbase"
 su - hadoop -c "hadoop/bin/hadoop dfs -chown hbase /hbase"
+su - hadoop -c "hadoop/bin/hadoop dfs -mkdir /user"
+su - hadoop -c "hadoop/bin/hadoop dfs -chmod 1777 /user"
 
 ln -s /home/storm/storm/bin/storm /usr/bin/storm
 ln -s /home/zookeeper/zookeeper/bin/zkCli.sh /usr/bin/zookeeper-client
@@ -33,21 +35,36 @@ done
 
 
 cat <<EOF > /etc/default/metron
-METRON_JDBC_DRIVER="org.h2.Driver"
-METRON_JDBC_URL="jdbc:h2:file:~/metrondb"
-METRON_JDBC_USERNAME="root"
-METRON_JDBC_PLATFORM="h2"
-METRON_JDBC_PASSWORD="root"
-HDFS_URL="hdfs://localhost:9000"
-ZOOKEEPER="localhost:2181"
-ZK=\$ZOOKEEPER
-BROKERLIST="localhost:6667"
-KAFKA=\$BROKERLIST
-METRON_SPRING_PROFILES_ACTIVE="vagrant,dev"
-SECURITY_ENABLED="false
-
-HADOOP_HOME="/home/hadoop/hadoop"
-METRON_HOME="/usr/metron/0.4.3"
-HBASE_HOME="/home/hbase/hbase"
-JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk"
+export METRON_JDBC_DRIVER="org.h2.Driver"
+export METRON_JDBC_URL="jdbc:h2:file:~/metrondb"
+export METRON_JDBC_USERNAME="root"
+export METRON_JDBC_PLATFORM="h2"
+export METRON_JDBC_PASSWORD="root"
+export HDFS_URL="hdfs://localhost:9000"
+export ZOOKEEPER="localhost:2181"
+export ZK=\$ZOOKEEPER
+export BROKERLIST="localhost:6667"
+export KAFKA=\$BROKERLIST
+export METRON_SPRING_PROFILES_ACTIVE="vagrant,dev"
+export SECURITY_ENABLED="false
+export HADOOP_HOME="/home/hadoop/hadoop"
+export METRON_HOME="/usr/metron/0.4.3"
+export HBASE_HOME="/home/hbase/hbase"
+export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk"
+export HADOOP_COMMON_HOME="/home/hadoop/hadoop"
+export HADOOP_HDFS_HOME="/home/hadoop/hadoop"
+export HADOOP_YARN_HOME="/home/hadoop/hadoop"
+export HADOOP_CONF_DIR="/home/hadoop/hadoop/etc/hadoop"
+EOF
+echo <<EOF > /usr/metron/0.4.3/config/alerts_ui.yml
+port: 4200
+rest:
+  host: localhost
+  port: 8082
+EOF
+echo <<EOF > /usr/metron/0.4.3/config/management_ui.yml
+port: 4201
+rest:
+  host: localhost
+  port: 8082
 EOF
