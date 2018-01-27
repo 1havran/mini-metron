@@ -1,7 +1,8 @@
 #!/bin/bash
 
-recipes_dir="./recipes"
-services="hadoop-2.7.1 zookeeper-3.4.10 kafka-1.0.0 elasticsearch-5.6.5 storm-1.1.1 kibana-6.1.1 hbase-1.2.6"
+recipes_dir="../../recipes"
+services="zookeeper-3.4.10 kafka-1.0.0"
+root_services="rsyslog-8.32.0 splunkforwarder-7.0.1"
 
 for s in $services; do
 	user=`echo $s | cut -d'-' -f1`
@@ -16,4 +17,8 @@ for s in $services; do
 	su - $user -c "/home/$user/$s.sh"
 	sleep 10
 	echo
+done
+
+for s in $root_services; do
+	sh $recipes_dir/$s.sh
 done

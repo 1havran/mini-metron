@@ -23,20 +23,23 @@ cd liblogging* && ./configure  --libdir=/usr/lib64 --includedir=/usr/include && 
 cd librdkafka && ./configure  --libdir=/usr/lib64 --includedir=/usr/include && make && make install
 cd rsyslog* && ./configure --enable-omkafka && make && make install
 
+DIR="/var/spool/rsyslogd"
+rm -rf $DIR 2>/dev/null
+mkdir $DIR
+
 for i in 50001 50002; do
 cat << EOF > /etc/rsyslog.d/$i.conf
-\$RulesetCreateMainQueue on
 \$ModLoad imudp
 \$ModLoad imtcp
 
 input(type="imudp" port="$i" ruleset="rule-$i")
 input(type="imtcp" port="$i" ruleset="rule-$i")
 
-ruleset(name="rule-$i") {
-        \$ModLoad omkafka
-        action(type="omkafka" topic="bucket-$i" confParam="compression.codec=snappy"
-                broker="localhost:6667" resubmitOnFailure="on")
-        stop
+ruleset(name="rule-$i" queue.type="LinkedList" queue.filename="rule-queue-$i" queue.spoolDirectory="/var/spool/rsyslogd" queue.timeoutenqueue="500") {
+  \$ModLoad omkafka
+  action(type="omkafka" topic="bucket-$i" confParam="compression.codec=snappy"
+    broker="localhost:6667" resubmitOnFailure="on")
+  stop
 }
 EOF
 done
