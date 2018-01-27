@@ -6,19 +6,28 @@ cat << EOF > /opt/splunkforwarder/etc/system/local/inputs.conf
 [monitor:///var/log/secure]
 sourcetype = linux_secure
 ignoreOlderThan = 1h
+
+[monitor://\$SPLUNK_HOME/var/log/splunk/metrics.log]
+disabled = true
+
+[monitor://\$SPLUNK_HOME/var/log/splunk/splunkd.log]
+disabled = true
+
+[monitor://\$SPLUNK_HOME/var/log/splunk]
+disabled = true
 EOF
 
 cat <<EOF > /opt/splunkforwarder/etc/system/local/outputs.conf
-[syslog]
+[tcpout]
 defaultGroup = rsyslogKafkaTcp, rsyslogKafkaUdp
+sendCookedData = false
+forwardedindex.0.whitelist = .*
+forwardedindex.1.whitelist = .*
+forwardedindex.2.whitelist = .*
 
-[syslog:rsyslogKafkaTcp]
+[tcpout:rsyslogKafkaTcp]
 server = localhost:50001
 type = tcp
-
-[syslog:rsyslogKafkaUdp]
-server = localhost:50001
-type = udp
 EOF
 
 /opt/splunkforwarder/bin/splunk status --accept-license
